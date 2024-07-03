@@ -1,0 +1,73 @@
+﻿@model Assesment.ViewModel.TaskVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Task</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Edit", "Tasks", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.HiddenFor(m => m.ID)
+                <label class="control-label">Title:</label>
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Description:</label>
+                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Due Date:</label>
+                @Html.EditorFor(m => m.DueDate, "{0:yyyy-MM-dd}", new { @class = "form-control", Type = "date" })
+                @Html.ValidationMessageFor(m => m.DueDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Material:</label>
+                @if (Model.AttachmentsType== AttachmentType.Img)
+                {
+                    <a href="@Model.Material" download>
+                        <img src="@Model.Material" alt="Attachment" width="40px" height="40px" />
+                    </a>
+                }
+                else
+                {
+                    <a href="@Model.Material" download>
+                        <img src="/Uploads/google-docs.png" alt="Attachment" width="40px" height="40px" />
+                    </a>
+                }
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Attachment:</label>
+              
+                <input type="file" name="MaterialPath" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Material, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Attachment Type:</label>
+                @Html.DropDownListFor(m => m.AttachmentsType, Html.GetEnumSelectList<AttachmentType>(), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.AttachmentsType, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

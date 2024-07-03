@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Assesment.Models.Tasks>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Task List</h1>
+@if (User.IsInRole("Admin"))
+                {
+    <a style="width: 100px;height:35px;" class="btn btn-sm btn-primary" asp-action="Create">Create New</a>
+
+                }
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Due Date</th>
+                <th>Attachment</th>
+                <th> Type</th>
+                <th>Created Date</th>
+                <th>Created By</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Actions</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
+                    <td>
+                        @if (item.AttachmentsType == AttachmentType.Img)
+                        {
+                            <a href="@item.Material" download>
+                                <img src="@item.Material" alt="Attachment" width="100px" height="100px" />
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@item.Material" download>
+                                <img src="/Uploads/google-docs.png" alt="Attachment" width="100px" height="100px" />
+                            </a>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.AttachmentsType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TaskCreatedDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TaskCreatedBy)</td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a style="width: 60px;" class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                            <br >
+                            <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.ID">Details</a>
+                            <br>
+                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

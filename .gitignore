@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Assesment-May/Assesment/.vs
+/Assesment-May/Assesment/Assesment/bin/Debug/net7.0
+/Assesment-May/Assesment/Assesment/obj
+/Assesment-May/Assesment/Assesment/wwwroot/lib
+*.rar
+/.vs

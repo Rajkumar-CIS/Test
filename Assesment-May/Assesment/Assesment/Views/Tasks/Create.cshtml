@@ -1,0 +1,51 @@
+﻿@model Assesment.Models.Tasks
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Task</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Create", "Tasks", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DueDate, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.DueDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(m => m.DueDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Material, new { @class = "control-label" })
+                <input type="file" name="MaterialPath" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Material, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.AttachmentsType, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.AttachmentsType, Html.GetEnumSelectList<AttachmentType>(), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.AttachmentsType, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create Task</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        }
+    </div>
+</div>
